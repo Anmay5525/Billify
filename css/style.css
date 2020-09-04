@@ -85,18 +85,18 @@ body{
     width: 120%;
 }
 
-.invoices-title-container, .customers-title-container{
+.invoices-title-container, .customers-title-container, .items-title-container{
     display: flex;
     justify-content: space-between;
     padding: 10 20 10 20;
 }
 
-.invoices-title, .customers-title{
+.invoices-title, .customers-title, .items-title{
     font-size: 25px;
     font-weight: bold;
 }
 
-.invoices-new-btn, .customers-new-btn{
+.invoices-new-btn, .customers-new-btn, .items-new-btn{
     color: white;
     background-color: #5851D7;
     border: none;
@@ -105,12 +105,12 @@ body{
     transition: all 0.5s;
 }
 
-.invoices-new-btn:hover, .customers-new-btn:hover{
+.invoices-new-btn:hover, .customers-new-btn:hover, .items-new-btn:hover{
     transform: scale(1.07);
     cursor: pointer;
 }
 
-.invoices-table, .customers-table{
+.invoices-table, .customers-table, .items-table{
     align-content: center;
     justify-content: center;
     width: 100%;

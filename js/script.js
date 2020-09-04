@@ -1,16 +1,13 @@
-// var state = {
-    
-// }
 
-import {data as d, data} from "./data.js";
+// import {data} from "./data.js";
+import {getCustomers} from "./Customers.js";
+import {getInvoices} from "./Invoices.js";
+import {getItems} from "./Items.js";
+
 
 
 //setup event listeners on three main tabs
-
-
-
 init();
-
 
 function init(){ 
 
@@ -30,6 +27,11 @@ function init(){
             getCustomers();
         }
 
+        else
+        {
+            getItems();
+        }
+
         //diplay no content when page loads
         $(".content").css("display","none");
 
@@ -47,192 +49,6 @@ function init(){
     }) ;
 
 }
-function getInvoices(){
-
-    //get invoices from api
-    $.get("https://rzp-training.herokuapp.com/team1/invoices", function(data,status){
-    // console.log(data);
-
-    
-    //table for displaying data
-    var table = `<table class="invoices-table">
-
-                    <thead>
-                        <th>INVOICE ID</th>
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>CONTACT</th>
-                    <thead>
-                `
-    //append row for each invoice in the data
-    data.items.forEach(element => {
-
-        var tr = `<tr class="tr">
-                    <td>${element.id}</td>
-                    <td>${element.customer_details.name}</td>
-                    <td>${element.customer_details.email}</td>
-                    <td>${element.customer_details.contact}</td>
-                </tr>  
-            `
-        table+=tr;
-    });
-        
-    table+=`</table>`;
-
-
-    //title and btn for invoices
-    var div = `
-                <div class="invoices-title-container">
-                    <div class="invoices-title">
-                        Invoices
-                    </div>
-                    <button class=invoices-new-btn>
-                    + New Invoice
-                    </button>
-                </div>
-            `
-
-    //clear element before adding invoices
-    $(".right-panel #Invoices").empty();
-    //append title and table
-    $(".right-panel #Invoices").append(`<div id="">`+div+table+`</div>`);
-
-
-}
-)};
-
-function getCustomers(){
-
-    //get invoices from api
-    $.get("https://rzp-training.herokuapp.com/team1/customers", function(data,status){
-    // console.log(data);
-
-    
-    //table for displaying data
-    var table = `<table class="customers-table">
-
-                    <thead>
-                        
-                        <th>NAME</th>
-                        <th>EMAIL</th>
-                        <th>CONTACT</th>
-                    <thead>
-                `
-    //append row for each invoice in the data
-    data.items.forEach(element => {
-
-        var tr = `<tr class="tr">
-                    
-                    <td>${element.name}</td>
-                    <td>${element.email}</td>
-                    <td>${element.contact}</td>
-                </tr>  
-            `
-        table+=tr;
-    });
-        
-    table+=`</table>`;
-
-
-    //title and btn for invoices
-    var div = `
-                <div class="customers-title-container">
-                    <div class="customers-title">
-                        Customers
-                    </div>
-                    <button class=customers-new-btn>
-                    + New Customer
-                    </button>
-                </div>
-            `
-
-    //clear element before adding invoices
-    $(".right-panel #Customers").empty();
-    //append title and table
-    $(".right-panel #Customers").append(`<div>`+div+table+`</div>`);
-
-    $('.right-panel .customers-new-btn').click(displayAddCustomerForm);
-
-
-}
-
-)};
-
-
-function displayAddCustomerForm(){
-
-    var form = `<div  class="customers-form">
-
-                    <div class="input-cnt">
-                        <div>Name</div> 
-                        <input class="input" id="name" type="text" placeholder="Enter name of customer">
-                    </div>
-
-                    <div class="input-cnt">
-                        <div>Email</div> 
-                        <input class="input" type="text" id="email" placeholder="Enter email">
-                    </div>
-
-                    <div class="input-cnt">
-                        <div>Phone No.</div> 
-                        <input class="input" type="text" id="phone" placeholder="Enter phone no.">
-                    </div>
-                    <div > 
-                        <button class="customers-add-btn">
-                            Add Customer
-                        </button>
-                        
-                    </div>
-
-                </div>`
-
-    //clear element before adding form
-    $(".right-panel #Customers").empty();
-    //append form
-    $(".right-panel #Customers").append(form);
-    
-    //add new customer on click
-    $(".customers-add-btn").click(addCustomer);
-    
-    // console.log("disp")
-}
-
-function addCustomer(event){
-
-    console.log(event);
-    // console.log($(".customers-form #name").val());
-
-    var name = $(".customers-form #name").val();
-    var email = $(".customers-form #email").val();
-    var phone = $(".customers-form #phone").val();
-
-    var url = "https://rzp-training.herokuapp.com/team1/customers";
-
-
-    var obj = {
-        name : name,
-        email : email,
-        contact : phone
-    }
-    // console.log(obj);
-
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: JSON.stringify(obj), 
-        success: function(data) { 
-            console.log('data: ' + data); 
-            //get updated customers and display them
-            getCustomers();
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
-
-
-    
-}
-
 
 
 
