@@ -121,7 +121,7 @@ function addCustomer(event){
         url: url,
         data: JSON.stringify(obj), 
         success: function(data) { 
-            console.log('data: ' + data); 
+            console.log( data); 
             //get updated customers and display them
             getCustomers();
         },

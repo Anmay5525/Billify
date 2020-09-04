@@ -14,6 +14,7 @@ export function getItems(){
                         <th>NAME</th>
                         <th>DESCRIPTION</th>
                         <th>AMOUNT</th>
+                        <th>CURRENCY</th>
                     <thead>
                 `
     //append row for each invoice in the data
@@ -23,7 +24,8 @@ export function getItems(){
                     
                     <td>${element.name}</td>
                     <td>${element.description}</td>
-                    <td>INR ${element.amount/100}</td>
+                    <td>${element.amount/100}</td>
+                    <td>${element.currency}</td>
                 </tr>  
             `
         table+=tr;
@@ -49,6 +51,87 @@ export function getItems(){
     //append title and table
     $(".right-panel #Items").append(`<div id="">`+div+table+`</div>`);
 
+    //displays new item form on click.
+    $('.right-panel .items-new-btn').click(displayAddItemForm);
 
 }
 )};
+
+
+
+
+function displayAddItemForm(){
+
+    var form = `<div  class="items-form">
+
+                    <div class="input-cnt">
+                        <div>Name</div> 
+                        <input class="input" id="name" type="text" placeholder="Enter name of item">
+                    </div>
+
+                    <div class="input-cnt">
+                        <div>Amount</div> 
+                        <input class="input" type="text" id="amount" placeholder="Enter amount">
+                    </div>
+
+                    <div class="input-cnt">
+                        <div>Description</div> 
+                        <textarea class="textarea"  id="description" placeholder="Add description" rows="4"></textarea>
+                    </div>
+                    <div > 
+                        <button class="items-add-btn">
+                            Add Item
+                        </button>
+                        
+                    </div>
+
+                </div>`
+
+    //clear element before adding form
+    $(".right-panel #Items").empty();
+    //append form
+    $(".right-panel #Items").append(form);
+    
+    //add new item on click
+    $(".items-add-btn").click(addItem);
+    
+    // console.log("disp")
+}
+
+function addItem(event){
+
+    // console.log(event);
+   
+
+    var name = $(".items-form #name").val();
+    var description = $(".items-form #description").val();
+    var amount = $(".items-form #amount").val();
+    var curr = "INR";
+
+    var url = "https://rzp-training.herokuapp.com/team1/items";
+
+
+    var obj = {
+        name : name,
+        description : description,
+        amount : amount,
+        currency : curr
+    }
+    console.log(obj);
+
+    $.ajax({
+        type: 'POST',
+        url: url,
+        data: JSON.stringify(obj), 
+        success: function(data) { 
+            console.log( data); 
+            //get updated items and display them
+            getItems();
+        },
+        contentType: "application/json",
+        dataType: 'json'
+    });
+    
+}
+
+

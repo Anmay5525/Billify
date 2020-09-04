@@ -64,6 +64,8 @@ body{
 
 .content{
     display:none;
+    justify-content: center;
+    align-content: center;
 }
 
 
@@ -75,14 +77,14 @@ body{
 
 .input{
     padding: 8px 8px;
-    width: 100%;
+    width: 40%;
     transition: all 0.3s;
     margin-top: 5px;
     margin-bottom: 5px;
 }
 
 .input:focus{
-    width: 120%;
+    width: 50%;
 }
 
 .invoices-title-container, .customers-title-container, .items-title-container{
@@ -148,10 +150,11 @@ th{
     display:flex;
     flex-wrap: wrap;
     padding : 20px 10px 10px 20px;
+    flex-direction: column;
     /* background-color: lightcoral; */
 }
 
-.customers-add-btn{
+.customers-add-btn, .items-add-btn{
     color: white;
     background-color: #5851D7;
     border: none;
@@ -161,7 +164,25 @@ th{
 
 }
 
-.customers-add-btn:hover{
+.customers-add-btn:hover, .items-add-btn:hover{
     transform: scale(1.05);
     cursor: pointer;
+}
+
+
+.items-form{
+    display: flex;
+    flex-direction: column;
+    padding : 20px 10px 10px 20px;
+
+    /* flex-wrap: wrap; */
+}
+
+.textarea{
+    /* height: 30%; */
+    width: 50%;
+    margin-right: 50px;
+    margin-top: 5px;
+    padding-left: 8px;
+
 }
