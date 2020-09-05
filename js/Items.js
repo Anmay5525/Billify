@@ -1,11 +1,9 @@
-
-export function getItems(){
-
-    //get items from api
-    $.get("https://rzp-training.herokuapp.com/team1/items", function(data,status){
-    // console.log(data);
-
-    
+export function getItems() {
+  //get items from api
+  $.get("https://rzp-training.herokuapp.com/team1/items", function (
+    data,
+    status
+  ) {
     //table for displaying data
     var table = `<table class="items-table">
 
@@ -16,23 +14,21 @@ export function getItems(){
                         <th>AMOUNT</th>
                         <th>CURRENCY</th>
                     <thead>
-                `
+                `;
     //append row for each invoice in the data
-    data.items.forEach(element => {
-
-        var tr = `<tr class="tr">
+    data.items.forEach((element) => {
+      var tr = `<tr class="tr">
                     
                     <td>${element.name}</td>
                     <td>${element.description}</td>
-                    <td>${element.amount/100}</td>
+                    <td>${element.amount / 100}</td>
                     <td>${element.currency}</td>
                 </tr>  
-            `
-        table+=tr;
+            `;
+      table += tr;
     });
-        
-    table+=`</table>`;
 
+    table += `</table>`;
 
     //title and btn for items
     var div = `
@@ -44,25 +40,20 @@ export function getItems(){
                     + New Item
                     </button>
                 </div>
-            `
+            `;
 
     //clear element before adding items
     $(".right-panel #Items").empty();
     //append title and table
-    $(".right-panel #Items").append(`<div id="">`+div+table+`</div>`);
+    $(".right-panel #Items").append(`<div id="">` + div + table + `</div>`);
 
     //displays new item form on click.
-    $('.right-panel .items-new-btn').click(displayAddItemForm);
-
+    $(".right-panel .items-new-btn").click(displayAddItemForm);
+  });
 }
-)};
 
-
-
-
-function displayAddItemForm(){
-
-    var form = `<div  class="items-form">
+function displayAddItemForm() {
+  var form = `<div  class="items-form">
 
                     <div class="input-cnt">
                         <div>Name</div> 
@@ -85,53 +76,43 @@ function displayAddItemForm(){
                         
                     </div>
 
-                </div>`
+                </div>`;
 
-    //clear element before adding form
-    $(".right-panel #Items").empty();
-    //append form
-    $(".right-panel #Items").append(form);
-    
-    //add new item on click
-    $(".items-add-btn").click(addItem);
-    
-    // console.log("disp")
+  //clear element before adding form
+  $(".right-panel #Items").empty();
+  //append form
+  $(".right-panel #Items").append(form);
+
+  //add new item on click
+  $(".items-add-btn").click(addItem);
 }
 
-function addItem(event){
+function addItem(event) {
+  var name = $(".items-form #name").val();
+  var description = $(".items-form #description").val();
+  var amount = $(".items-form #amount").val();
+  var curr = "INR";
 
-    // console.log(event);
-   
+  var url = "https://rzp-training.herokuapp.com/team1/items";
 
-    var name = $(".items-form #name").val();
-    var description = $(".items-form #description").val();
-    var amount = $(".items-form #amount").val();
-    var curr = "INR";
+  var obj = {
+    name: name,
+    description: description,
+    amount: amount,
+    currency: curr,
+  };
+  console.log(obj);
 
-    var url = "https://rzp-training.herokuapp.com/team1/items";
-
-
-    var obj = {
-        name : name,
-        description : description,
-        amount : amount,
-        currency : curr
-    }
-    console.log(obj);
-
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: JSON.stringify(obj), 
-        success: function(data) { 
-            console.log( data); 
-            //get updated items and display them
-            getItems();
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
-    
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: JSON.stringify(obj),
+    success: function (data) {
+      console.log(data);
+      //get updated items and display them
+      getItems();
+    },
+    contentType: "application/json",
+    dataType: "json",
+  });
 }
-
-

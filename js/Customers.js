@@ -1,13 +1,9 @@
-
-
-
-export function getCustomers(){
-
-    //get customers from api
-    $.get("https://rzp-training.herokuapp.com/team1/customers", function(data,status){
-    // console.log(data);
-
-    
+export function getCustomers() {
+  //get customers from api
+  $.get("https://rzp-training.herokuapp.com/team1/customers", function (
+    data,
+    status
+  ) {
     //table for displaying data
     var table = `<table class="customers-table">
 
@@ -17,22 +13,20 @@ export function getCustomers(){
                         <th>EMAIL</th>
                         <th>CONTACT</th>
                     <thead>
-                `
+                `;
     //append row for each cust in the data
-    data.items.forEach(element => {
-
-        var tr = `<tr class="tr">
+    data.items.forEach((element) => {
+      var tr = `<tr class="tr">
                     
                     <td>${element.name}</td>
                     <td>${element.email}</td>
                     <td>${element.contact}</td>
                 </tr>  
-            `
-        table+=tr;
+            `;
+      table += tr;
     });
-        
-    table+=`</table>`;
 
+    table += `</table>`;
 
     //title and btn for cust
     var div = `
@@ -44,24 +38,19 @@ export function getCustomers(){
                     + New Customer
                     </button>
                 </div>
-            `
+            `;
 
     //clear element before adding custs
     $(".right-panel #Customers").empty();
     //append title and table
-    $(".right-panel #Customers").append(`<div>`+div+table+`</div>`);
+    $(".right-panel #Customers").append(`<div>` + div + table + `</div>`);
 
-    $('.right-panel .customers-new-btn').click(displayAddCustomerForm);
-
-
+    $(".right-panel .customers-new-btn").click(displayAddCustomerForm);
+  });
 }
 
-)};
-
-
-function displayAddCustomerForm(){
-
-    var form = `<div  class="customers-form">
+function displayAddCustomerForm() {
+  var form = `<div  class="customers-form">
 
                     <div class="input-cnt">
                         <div>Name</div> 
@@ -84,50 +73,40 @@ function displayAddCustomerForm(){
                         
                     </div>
 
-                </div>`
+                </div>`;
 
-    //clear element before adding form
-    $(".right-panel #Customers").empty();
-    //append form
-    $(".right-panel #Customers").append(form);
-    
-    //add new customer on click
-    $(".customers-add-btn").click(addCustomer);
-    
-    // console.log("disp")
+  //clear element before adding form
+  $(".right-panel #Customers").empty();
+  //append form
+  $(".right-panel #Customers").append(form);
+
+  //add new customer on click
+  $(".customers-add-btn").click(addCustomer);
 }
 
-function addCustomer(event){
+function addCustomer(event) {
+  var name = $(".customers-form #name").val();
+  var email = $(".customers-form #email").val();
+  var phone = $(".customers-form #phone").val();
 
-    console.log(event);
-    // console.log($(".customers-form #name").val());
+  var url = "https://rzp-training.herokuapp.com/team1/customers";
 
-    var name = $(".customers-form #name").val();
-    var email = $(".customers-form #email").val();
-    var phone = $(".customers-form #phone").val();
+  var obj = {
+    name: name,
+    email: email,
+    contact: phone,
+  };
 
-    var url = "https://rzp-training.herokuapp.com/team1/customers";
-
-
-    var obj = {
-        name : name,
-        email : email,
-        contact : phone
-    }
-    // console.log(obj);
-
-    $.ajax({
-        type: 'POST',
-        url: url,
-        data: JSON.stringify(obj), 
-        success: function(data) { 
-            console.log( data); 
-            //get updated customers and display them
-            getCustomers();
-        },
-        contentType: "application/json",
-        dataType: 'json'
-    });
-    
+  $.ajax({
+    type: "POST",
+    url: url,
+    data: JSON.stringify(obj),
+    success: function (data) {
+      console.log(data);
+      //get updated customers and display them
+      getCustomers();
+    },
+    contentType: "application/json",
+    dataType: "json",
+  });
 }
-
