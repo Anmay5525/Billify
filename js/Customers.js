@@ -1,9 +1,6 @@
 export function getCustomers() {
   //get customers from api
-  $.get("https://rzp-training.herokuapp.com/team1/customers", function (
-    data,
-    status
-  ) {
+  $.get("https://rzp-training.herokuapp.com/team1/customers", function (data) {
     //table for displaying data
     var table = `<table class="customers-table">
 

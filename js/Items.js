@@ -1,9 +1,6 @@
 export function getItems() {
   //get items from api
-  $.get("https://rzp-training.herokuapp.com/team1/items", function (
-    data,
-    status
-  ) {
+  $.get("https://rzp-training.herokuapp.com/team1/items", function (data) {
     //table for displaying data
     var table = `<table class="items-table">
 
